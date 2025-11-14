@@ -12,6 +12,7 @@ int main(void) {
 	}
 
 	create_lock();
+	create_log();
 	init_daemon();
 	run_server();
 	printf(LOGIN);
