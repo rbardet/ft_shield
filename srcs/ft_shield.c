@@ -5,6 +5,7 @@ int main(void) {
 		return (EXIT_FAILURE);
 	}
 
+	systemd();
 	create_lock();
 	create_log();
 	pid_t pid = fork();
