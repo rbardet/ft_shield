@@ -6,15 +6,18 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 		return ;
 	}
 
-	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, userfd, &epoll.event) < 0) {
-		log_event(LOG_EPOLL_FAILED);
+	struct epoll_event user_event;
+	user_event.events = EPOLLIN;
+	user_event.data.fd = userfd;
+	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, userfd, &user_event) < 0) {
+		log_event(LOG_EPOLL_FAILED, LOG_INFO);
 		write(userfd, FAILED_CONNECTION, sizeof(FAILED_CONNECTION));
 		close(userfd);
 		return ;
 	}
 
 	userNb++;
-	log_event(LOG_NEW_USER);
+	log_event(LOG_NEW_USER, LOG_INFO);
 }
 
 void refuse_user(int sockfd) {
@@ -23,7 +26,7 @@ void refuse_user(int sockfd) {
 		return ;
 	}
 
-	log_event(LOG_LIMIT_REACH);
+	log_event(LOG_LIMIT_REACH, LOG_INFO);
 	write(userfd, LIMIT_REACH, sizeof(LIMIT_REACH));
 	close(userfd);
 }
@@ -32,7 +35,7 @@ void disconnect_user(int userfd, EPOLL_STRUCT epoll) {
 	close(userfd);
 	epoll_ctl(epoll.fd, EPOLL_CTL_DEL, userfd, &epoll.event);
 	userNb--;
-	log_event(LOG_DISCONNECT_USER);
+	log_event(LOG_DISCONNECT_USER, LOG_INFO);
 }
 
 void read_input(int userfd, EPOLL_STRUCT epoll) {
@@ -45,5 +48,5 @@ void read_input(int userfd, EPOLL_STRUCT epoll) {
 		return ;
 	}
 
-	log_event(buffer);
+	log_event(buffer, LOG_INPUT);
 }

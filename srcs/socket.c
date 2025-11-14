@@ -29,6 +29,8 @@ static int init_socket() {
 	return (sockfd);
 }
 
+EPOLL_STRUCT epoll;
+
 static EPOLL_STRUCT init_epoll(int sockfd) {
 	EPOLL_STRUCT epoll;
 
@@ -52,7 +54,7 @@ void run_server() {
 		return ;
 	}
 
-	EPOLL_STRUCT epoll = init_epoll(sockfd);
+	epoll = init_epoll(sockfd);
 	if (epoll.fd < 0) {
 		return;
 	}
@@ -66,11 +68,9 @@ void run_server() {
 		for (int i = 0; i < eventNb; i++) {
 			if (epoll.events[i].data.fd == sockfd && userNb < MAX_USER) {
 				accept_user(sockfd, epoll);
-			} else {
+			} else if (epoll.events[i].data.fd == sockfd && userNb >= MAX_USER) {
 				refuse_user(sockfd);
-			}
-
-			if (epoll.events->data.fd != sockfd) {
+			} else {
 				read_input(epoll.events[i].data.fd, epoll);
 			}
 		}
