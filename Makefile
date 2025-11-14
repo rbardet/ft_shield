@@ -1,17 +1,18 @@
 NAME = ft_shield
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
-SOURCES = srcs/ft_shield.c
-srcs/lock.c
+SOURCES = srcs/ft_shield.c \
+	srcs/lock.c \
+	srcs/socket.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
 all: ${NAME}
 
 ${NAME}: ${OBJECTS}
-	${CC} ${CFLAGS} -o ${OBJECTS} 
+	${CC} ${CFLAGS} ${OBJECTS} -o ${NAME}
 
 clean:
 	rm -f ${OBJECTS}
@@ -21,4 +22,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY all clean fclean re
+.PHONY: all clean fclean re
