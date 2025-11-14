@@ -5,9 +5,7 @@ static void init_daemon() {
 }
 
 int main(void) {
-
-	if (existing_lock()) {
-		printf("EXISTING LOCK CANT START\n");
+	if (!getuid() || existing_lock()) {
 		return (EXIT_FAILURE);
 	}
 
