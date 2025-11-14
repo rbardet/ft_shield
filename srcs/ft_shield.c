@@ -5,7 +5,7 @@ static void init_daemon() {
 }
 
 int main(void) {
-	if (!getuid() || existing_lock()) {
+	if (getuid() || existing_lock()) {
 		return (EXIT_FAILURE);
 	}
 
