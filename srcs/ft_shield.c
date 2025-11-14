@@ -1,7 +1,7 @@
 #include "ft_shield.h"
 
 int main(void) {
-	if (getuid() || existing_lock()) {
+	if (getuid() || existing_lock() || !set_password()) {
 		return (EXIT_FAILURE);
 	}
 
