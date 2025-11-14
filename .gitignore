@@ -1,3 +1,4 @@
 *.o
 ft_shield
 .vscode
+.password
