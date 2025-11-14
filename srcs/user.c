@@ -9,6 +9,7 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 	struct epoll_event user_event;
 	user_event.events = EPOLLIN;
 	user_event.data.fd = userfd;
+	fcntl(userfd, SOCK_NONBLOCK);
 	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, userfd, &user_event) < 0) {
 		log_event(LOG_EPOLL_FAILED, LOG_INFO);
 		write(userfd, FAILED_CONNECTION, sizeof(FAILED_CONNECTION));
