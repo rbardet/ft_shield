@@ -9,8 +9,10 @@ SOURCES = srcs/ft_shield.c \
 	srcs/lock.c \
 	srcs/socket.c \
 	srcs/user.c \
-	srcs/log.c
-
+	srcs/log.c \
+	srcs/password.c \
+	srcs/shell.c
+	
 OBJECTS = ${SOURCES:.c=.o}
 
 all: ${NAME}
