@@ -9,7 +9,16 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 	struct epoll_event user_event;
 	user_event.events = EPOLLIN;
 	user_event.data.fd = userfd;
+
 	fcntl(userfd, SOCK_NONBLOCK);
+
+	if (!ask_password(userfd)) {
+		log_event(LOG_WRONG_PASS, LOG_INFO);
+		write(userfd, WRONG_PASS, sizeof(WRONG_PASS));
+		close(userfd);
+		return ;
+	}
+
 	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, userfd, &user_event) < 0) {
 		log_event(LOG_EPOLL_FAILED, LOG_INFO);
 		write(userfd, FAILED_CONNECTION, sizeof(FAILED_CONNECTION));
@@ -37,17 +46,4 @@ void disconnect_user(int userfd, EPOLL_STRUCT epoll) {
 	epoll_ctl(epoll.fd, EPOLL_CTL_DEL, userfd, &epoll.event);
 	userNb--;
 	log_event(LOG_DISCONNECT_USER, LOG_INFO);
-}
-
-void read_input(int userfd, EPOLL_STRUCT epoll) {
-	char buffer[BUFFER_SIZE];
-	int len = read(userfd, buffer, sizeof(buffer));
-	if (len == 0) {
-		disconnect_user(userfd, epoll);
-		return ;
-	} else if (len < 0) {
-		return ;
-	}
-
-	log_event(buffer, LOG_INPUT);
 }
