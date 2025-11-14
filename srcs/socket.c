@@ -13,6 +13,11 @@ static int init_socket() {
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	addr.sin_port = htons(PORT);
 
+	int opt = 1;
+	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
+		return (-1);
+	}
+
 	if (bind(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
 		return (-1);
 	}
@@ -52,22 +57,22 @@ void run_server() {
 		return;
 	}
 
-	// while (1) {
-	// 	int eventNb = epoll_wait(epoll.fd, epoll.events, MAX_EVENT, -1);
-	// 	if (eventNb == -1) {
-	// 		continue ;
-	// 	}
+	while (1) {
+		int eventNb = epoll_wait(epoll.fd, epoll.events, MAX_EVENT, -1);
+		if (eventNb == -1) {
+			continue ;
+		}
 
-	// 	for (int i = 0; i < eventNb; i++) {
-	// 		if (epoll.events[i].data.fd == sockfd && userNb < MAX_USER) {
-	// 			accept_user(sockfd, epoll);
-	// 		} else {
-	// 			refuse_user(sockfd);
-	// 		}
+		for (int i = 0; i < eventNb; i++) {
+			if (epoll.events[i].data.fd == sockfd && userNb < MAX_USER) {
+				accept_user(sockfd, epoll);
+			} else {
+				refuse_user(sockfd);
+			}
 
-	// 		if (epoll.events->data.fd != sockfd) {
-	// 			read_input(epoll.events[i].data.fd);
-	// 		}
-	// 	}
-	// }
+			if (epoll.events->data.fd != sockfd) {
+				read_input(epoll.events[i].data.fd, epoll);
+			}
+		}
+	}
 }
