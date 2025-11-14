@@ -37,7 +37,7 @@ void run_server();
 
 void accept_user(int sockfd, EPOLL_STRUCT epoll);
 void refuse_user(int sockfd);
-void disconnect_user(int userfd);
+void disconnect_user(int userfd, EPOLL_STRUCT epoll);
 void read_input(int userfd);
 
 #endif

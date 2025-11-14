@@ -6,7 +6,7 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 		return ;
 	}
 
-	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, sockfd, &epoll.event) < 0) {
+	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, userfd, &epoll.event) < 0) {
 		write(userfd, FAILED_CONNECTION, sizeof(FAILED_CONNECTION));
 		close(userfd);
 		return ;
@@ -25,8 +25,9 @@ void refuse_user(int sockfd) {
 	close(userfd);
 }
 
-void disconnect_user(int userfd) {
+void disconnect_user(int userfd, EPOLL_STRUCT epoll) {
 	close(userfd);
+	epoll_ctl(epoll.fd, EPOLL_CTL_DEL, userfd, &epoll.event);
 	userNb--;
 }
 
