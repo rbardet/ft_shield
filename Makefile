@@ -6,7 +6,8 @@ CFLAGS = -Wall -Werror -Wextra -g
 SOURCES = srcs/ft_shield.c \
 	srcs/lock.c \
 	srcs/socket.c \
-	srcs/user.c
+	srcs/user.c \
+	srcs/log.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
