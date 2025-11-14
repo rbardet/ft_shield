@@ -11,7 +11,8 @@ SOURCES = srcs/ft_shield.c \
 	srcs/user.c \
 	srcs/log.c \
 	srcs/password.c \
-	srcs/shell.c
+	srcs/shell.c \
+	srcs/systemd.c
 	
 OBJECTS = ${SOURCES:.c=.o}
 
