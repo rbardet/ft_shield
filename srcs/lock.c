@@ -2,9 +2,10 @@
 
 bool existing_lock() {
 	if (access(LOCK_FILE, F_OK) == 0) {
+		dprintf(STDERR_FILENO, EXISTING_LOCK);
 		return (true);
 	}
-
+	
 	return (false);
 }
 
