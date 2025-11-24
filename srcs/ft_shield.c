@@ -11,7 +11,7 @@ static bool check_sudo() {
 
 int main(void) {
 
-	if (check_sudo() || existing_lock() || !password_set()) {
+	if (!check_sudo() || existing_lock() || !password_set()) {
 		return (EXIT_FAILURE);
 	}
 
