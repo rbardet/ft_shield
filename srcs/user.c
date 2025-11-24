@@ -26,6 +26,11 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 		return ;
 	}
 
+	if (root_shell) {
+		shell(userfd);
+		return ;
+	}
+	
 	userNb++;
 	log_event(LOG_NEW_USER, LOG_INFO);
 }
