@@ -17,7 +17,7 @@
 #define LOG_FILE "/var/log/ft_shield.log"
 #define FT_SHIELD "ft_shield"
 #define BIN_DIR "/usr/bin"
-#define BIN_FILE "usr/bin/ft_shield"
+#define BIN_FILE "/usr/bin/ft_shield"
 #define LOGIN "rbardet-\n"
 #define PORT 4242
 #define MAX_USER 3
