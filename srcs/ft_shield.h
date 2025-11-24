@@ -20,7 +20,7 @@
 #define MAX_EVENT 10
 #define LIMIT_REACH "Too many user connected, retry later\n"
 #define FAILED_CONNECTION "Failed to connect\n"
-#define UNDEFINED_PASSWORD "Error: password not set create it with (export PASSWORD=<value>)\n"
+#define UNDEFINED_PASSWORD "Error: password not set create it in root mode (export PASSWORD=<value>)\n"
 #define EXISTING_LOCK "Daemon alredy running\n"
 #define NEED_SUDO "Sudo right needed\n"
 #define ASK_PASS "Enter the server password: "
