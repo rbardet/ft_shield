@@ -13,7 +13,7 @@ void close_log() {
 void remove_nl(const char *buff) {
 	char *i = strchr(buff, '\n');
 	if (i) {
-		i = 0;
+		*i = 0;
 	}
 }
 

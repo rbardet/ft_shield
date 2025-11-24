@@ -3,7 +3,6 @@
 char *pass;
 
 bool password_set() {
-
 	pass = getenv("PASSWORD");
 	if (!pass) {
 		dprintf(STDERR_FILENO, UNDEFINED_PASSWORD);
@@ -23,6 +22,7 @@ bool ask_password(int userfd) {
 	}
 
 	buff[len] = '\0';
+	remove_nl(buff);
 	if (strcmp(buff, pass) != 0) {
 		return (false);
 	}
