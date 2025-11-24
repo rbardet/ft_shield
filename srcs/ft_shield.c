@@ -1,8 +1,17 @@
 #include "ft_shield.h"
 
+static bool check_sudo() {
+	if (getuid()) {
+		dprintf(STDERR_FILENO, NEED_SUDO);
+		return (false)
+	} else {
+		return (true);
+	}
+}
+
 int main(void) {
 
-	if (getuid() || existing_lock() || !password_set()) {
+	if (check_sudo() || existing_lock() || !password_set()) {
 		return (EXIT_FAILURE);
 	}
 

@@ -22,6 +22,7 @@
 #define FAILED_CONNECTION "Failed to connect\n"
 #define UNDEFINED_PASSWORD "Error: password not set create it with (export PASSWORD=<value>)\n"
 #define EXISTING_LOCK "Daemon alredy running\n"
+#define NEED_SUDO "Sudo right needed\n"
 #define ASK_PASS "Enter the server password: "
 #define WRONG_PASS "Wrong pass. Goodbye\n"
 #define BUFFER_SIZE 256
