@@ -3,7 +3,7 @@
 static bool check_sudo() {
 	if (getuid()) {
 		dprintf(STDERR_FILENO, NEED_SUDO);
-		return (false)
+		return (false);
 	} else {
 		return (true);
 	}
