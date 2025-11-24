@@ -6,6 +6,10 @@ void create_log() {
 	logFile = fopen(LOG_FILE, "w+");
 }
 
+void close_log() {
+	fclose(logFile);
+}
+
 void remove_nl(const char *buff) {
 	char *i = strchr(buff, '\n');
 	if (i) {
