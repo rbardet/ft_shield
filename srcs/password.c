@@ -1,15 +1,22 @@
 #include "ft_shield.h"
 
-char *pass;
+char pass[BUFFER_SIZE];
 
-bool password_set() {
-	pass = getenv("PASSWORD");
-	if (!pass) {
-		dprintf(STDERR_FILENO, UNDEFINED_PASSWORD);
+bool set_password() {
+	int fd = open(PASS_FILE, O_RDONLY);
+	if (fd < 0) {
+		write(STDOUT_FILENO, UNDEFINED_PASSWORD, strlen(UNDEFINED_PASSWORD));
 		return (false);
-	} else {
-		return (true);
 	}
+
+	int bytes = read(fd, pass, BUFFER_SIZE);
+	if (bytes <= 0) {
+		write(STDOUT_FILENO, UNDEFINED_PASSWORD, strlen(UNDEFINED_PASSWORD));
+		return (false);
+	}
+
+	pass[bytes] = '\0';
+	return (true);
 }
 
 bool ask_password(int userfd) {
@@ -22,7 +29,6 @@ bool ask_password(int userfd) {
 	}
 
 	buff[len] = '\0';
-	remove_nl(buff);
 	if (strcmp(buff, pass) != 0) {
 		return (false);
 	}

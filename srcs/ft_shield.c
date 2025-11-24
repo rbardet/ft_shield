@@ -10,8 +10,7 @@ static bool check_sudo() {
 }
 
 int main(void) {
-
-	if (!check_sudo() || existing_lock() || !password_set()) {
+	if (!check_sudo() || existing_lock() || !set_password()) {
 		return (EXIT_FAILURE);
 	}
 
