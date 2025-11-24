@@ -20,11 +20,10 @@
 #define MAX_EVENT 10
 #define LIMIT_REACH "Too many user connected, retry later\n"
 #define FAILED_CONNECTION "Failed to connect\n"
+#define UNDEFINED_PASSWORD "Error: password not set create it with (export PASSWORD=<value>)\n"
 #define ASK_PASS "Enter the server password: "
 #define WRONG_PASS "Wrong pass. Goodbye\n"
 #define BUFFER_SIZE 256
-#define PASS_FILE ".password"
-#define PASS_SIZE BUFFER_SIZE
 
 #define LOG_LIMIT_REACH "[ERROR]: connection failed (reason: limit reached)\n"
 #define LOG_EPOLL_FAILED "[ERROR]: connection failed (reason: failed to add to epoll)\n"
@@ -64,7 +63,6 @@ typedef struct {
 
 extern int userNb;
 extern EPOLL_STRUCT epoll;
-extern char password[PASS_SIZE];
 
 #define EPOLL_ERROR ((EPOLL_STRUCT){.fd = -1})
 
@@ -79,10 +77,11 @@ void refuse_user(int sockfd);
 void disconnect_user(int userfd, EPOLL_STRUCT epoll);
 
 void create_log();
+void close_log();
 void log_event(char *log, LOG_TYPE __TYPE__);
 void remove_nl(const char *buff);
 
-bool set_password();
+bool password_set();
 bool ask_password(int userfd);
 
 void read_input(int userfd, EPOLL_STRUCT epoll);
