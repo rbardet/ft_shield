@@ -3,14 +3,10 @@
 static bool already_installed(void) {
 	struct stat st;
 	
-	if (stat(BIN_FILE, &st) == 0) {
+	if (!stat(BIN_FILE, &st) && !stat(SYS_FILE, &st)) {
 		return (true);
 	}
-
-	if (stat(SYS_FILE, &st) == 0) {
-		return (true);
-	}
-
+	
 	return (false);
 }
 

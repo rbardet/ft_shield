@@ -53,7 +53,6 @@ After=network.target\n\
 \n\
 [Service]\n\
 ExecStart=/usr/local/bin/ft_shield\n\
-Restart=always\n\
 User=root\n\
 \n\
 [Install]\n\
