@@ -17,13 +17,16 @@ static void handle_input(char *buffer, int userfd) {
 void shell(int userfd) {
 	pid_t pid = fork();
 	if (pid == 0) {
-		dup2(userfd, STDIN_FILENO);
-		dup2(userfd, STDOUT_FILENO);
-		dup2(userfd, STDERR_FILENO);
-		execl("/bin/bash", "bash", NULL);
+		pid_t pid2 = fork();
+		if (pid == 0) {
+			dup2(userfd, STDIN_FILENO);
+			dup2(userfd, STDOUT_FILENO);
+			dup2(userfd, STDERR_FILENO);
+			execl("/bin/bash", "bash", NULL);
+		}
+		waitpid(pid2, NULL, 0);
 	}
 	root_shell = false;
-	waitpid(pid, NULL, 0);
 	return ;
 }
 
