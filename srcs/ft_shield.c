@@ -11,6 +11,7 @@ static bool check_sudo() {
 
 static void del_lock() {
 	unlink(LOCK_FILE);
+	close_log();
 }
 
 static void handle_sigterm() {
