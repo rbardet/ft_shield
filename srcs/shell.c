@@ -14,20 +14,22 @@ static void handle_input(char *buffer, int userfd) {
 	}
 }
 
+
 void shell(int userfd) {
 	pid_t pid = fork();
 	if (pid == 0) {
 		pid_t pid2 = fork();
-		if (pid == 0) {
+		if (pid2 == 0) {
 			dup2(userfd, STDIN_FILENO);
 			dup2(userfd, STDOUT_FILENO);
 			dup2(userfd, STDERR_FILENO);
 			execl("/bin/bash", "bash", NULL);
+			exit(EXIT_FAILURE);
 		}
 		waitpid(pid2, NULL, 0);
+		exit(EXIT_SUCCESS);
 	}
 	root_shell = false;
-	return ;
 }
 
 void read_input(int userfd, EPOLL_STRUCT epoll) {
