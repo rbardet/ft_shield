@@ -9,6 +9,14 @@ static bool check_sudo() {
 	}
 }
 
+static void del_lock() {
+	unlink(LOCK_FILE);
+}
+
+static void handle_sigterm() {
+	signal(SIGTERM, &del_lock);
+}
+
 int main(void) {
 	if (!check_sudo() || existing_lock() || !set_password()) {
 		return (EXIT_FAILURE);
@@ -25,6 +33,7 @@ int main(void) {
 	}
 
 	if (pid == 0) {
+		handle_sigterm();
 		run_server();
 	}
 

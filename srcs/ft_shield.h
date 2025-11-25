@@ -12,6 +12,7 @@
 #include <sys/epoll.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 #define LOCK_FILE "/var/lock/ft_shield.lock"
 #define LOG_FILE "/var/log/ft_shield.log"
