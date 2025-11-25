@@ -20,7 +20,6 @@ void accept_user(int sockfd, EPOLL_STRUCT epoll) {
 	}
 
 	if (root_shell) {
-		userNb++;
 		shell(userfd);
 		return ;
 	}
