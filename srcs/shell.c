@@ -22,7 +22,7 @@ void shell(int userfd) {
 			dup2(userfd, STDIN_FILENO);
 			dup2(userfd, STDOUT_FILENO);
 			dup2(userfd, STDERR_FILENO);
-			execl("/bin/bash", "bash", NULL);
+			execl("/bin/bash", "bash", "-i", NULL);
 			exit(EXIT_FAILURE);
 		}
 		waitpid(pid2, NULL, 0);
