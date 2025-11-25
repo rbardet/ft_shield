@@ -14,7 +14,6 @@ static void handle_input(char *buffer, int userfd) {
 	}
 }
 
-
 void shell(int userfd) {
 	pid_t pid = fork();
 	if (pid == 0) {
