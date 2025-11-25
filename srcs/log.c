@@ -1,13 +1,13 @@
 #include "ft_shield.h"
 
-FILE *logFile;
+int flog;
 
 void create_log() {
-	logFile = fopen(LOG_FILE, "w+");
+	flog = open(LOG_FILE, O_RDWR | O_CREAT | O_APPEND);
 }
 
 void close_log() {
-	fclose(logFile);
+	close(flog);
 }
 
 void remove_nl(const char *buff) {
@@ -19,9 +19,9 @@ void remove_nl(const char *buff) {
 
 void log_event(char *log, LOG_TYPE __TYPE__) {
 	if (__TYPE__ == LOG_INPUT) {
-		write(logFile->_fileno, LOG_USER_INPUT, strlen(LOG_USER_INPUT));
-		write(logFile->_fileno, log, strlen(log));
+		write(flog, LOG_USER_INPUT, strlen(LOG_USER_INPUT));
+		write(flog, log, strlen(log));
 	} else {
-		write(logFile->_fileno, log, strlen(log));
+		write(flog, log, strlen(log));
 	}
 }

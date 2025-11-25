@@ -39,6 +39,8 @@
 #define LOG_NEW_USER "[INFO]: new user connected\n"
 #define LOG_USER_INPUT "[INPUT]: "
 #define LOG_WRONG_PASS "[INFO]: connection attempt with wrong pass\n"
+#define LOG_SERVER_START "[INFO]: server start\n"
+#define LOG_CLOSE_SERVER "[INFO]: server close\n"
 
 #define CMD_HELP "?"
 #define HELP_MSG "? show help\nshell Spawn remote shell on 4242\n"

@@ -10,21 +10,22 @@ static bool already_installed(void) {
 	return (false);
 }
 
-static void cp_bin(void)
-{
+static void cp_bin(void) {
 	int fd_src = open(FT_SHIELD, O_RDONLY);
-	if (fd_src < 0)
+	if (fd_src < 0) {
 		return;
+	}
 
 	int fd_dst = open(BIN_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0755);
-	if (fd_dst < 0)
+	if (fd_dst < 0) {
+		close(fd_src);
 		return;
+	}
 
 	char buff[BUFFER_SIZE];
 	int bytes = 0;
 
-	while ((bytes = read(fd_src, buff, BUFFER_SIZE)) > 0)
-	{
+	while ((bytes = read(fd_src, buff, BUFFER_SIZE)) > 0) {
 		write(fd_dst, buff, bytes);
 	}
 
@@ -32,16 +33,16 @@ static void cp_bin(void)
 	close(fd_dst);
 }
 
-void systemd(void)
-{
+void systemd(void) {
 	if (already_installed()) {
 		return ;
 	}
 
 	cp_bin();
 	int fd = open(SYS_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
+	if (fd < 0) {
 		return;
+	}
 	write(fd, SYSTEMD_OPT, strlen(SYSTEMD_OPT));
 	close(fd);
 

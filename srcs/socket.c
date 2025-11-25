@@ -26,6 +26,7 @@ static int init_socket() {
 		return (-1);
 	}
 	
+	log_event(LOG_SERVER_START, LOG_INFO);
 	return (sockfd);
 }
 
